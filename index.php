@@ -30,7 +30,8 @@ function save_sub()
 {
     $url = create_url();
     echo $url;
-    file_put_contents('worker-sub', file_get_contents($url));
+    file_put_contents('worker-sub.txt', file_get_contents($url));
 }
 
 save_sub();
+?>
