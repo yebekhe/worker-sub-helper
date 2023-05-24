@@ -49,5 +49,11 @@ There are a few potential issues with this code:
 
 ## How to Use
 
-Just press `Use this Template` and create a new repository (Private repository recomended) , edit workers.json and set your desired settings and finally setup a workflow with file in .github/workflow directory.
-Now automatically github updates your subscription every 60 minutes and puts it in a file named worker-sub.
+- Press `Use this tepmlate` and or press on `<> Code` and download repository zip file and create a private repository for yourself.
+- Navigate to settings tab and in `Actions -> General` check Workflow premissions section and select `Read and Write Premissions` and check `Allow Github Actions to create and approve pull requests` and press `Save`
+- Create a bot in telegram using [BotFather](https://t.me/BotFather) and Find your userid of telegram account with [@userinfobot](https://t.me/userinfobot)
+- Next again in settings tab and in `Secrets and Variables -> Actions` create 2 Repository secret : `TELEGRAM_TO` for your telegram userid and `TELEGRAM_TOKEN` for your telegram bot token which created in previous step
+- Navigate to Code tab and Edit workers.json for your needs 
+- Ok that all of it :) now github will send your subscription file every 60 minutes to your telegram account!
+
+
