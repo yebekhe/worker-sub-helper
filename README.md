@@ -1,33 +1,53 @@
-# worker sub helper
+# README
 
-This is a PHP script called **worker sub helper**. It can be used to fetch data from a worker URL by accepting a GET request with the parameter 'url' and optional variables such as 'sub', 'max', 'original', 'fp', 'alpn', 'type', and 'provider'.
-
-این یک اسکریپت PHP به نام **worker sub helper** است. با استفاده از آن می‌توانید با دریافت یک درخواست GET با پارامتر 'url' و متغیرهای اختیاری مانند 'sub'، 'max'، 'original'، 'fp'، 'alpn'، 'type' و 'provider'، اطلاعاتی را از یک URL ورکر دریافت کنید.
-
-You can use this script not only with [vfarid's worker subscription](https://github.com/vfarid/v2ray-worker-sub) but also for any subscription link that is filtered.
-
-شما می‌توانید از این اسکریپت نه تنها با [ورکر vfarid](https://github.com/vfarid/v2ray-worker-sub) بلکه هر لینک سابسکریپشن فیلتر شده دیگری استفاده کنید.
+This PHP code defines two functions, `create_url()` and `save_sub()`, that work together to create a URL based on data in a JSON file and save the result to a file.
 
 ## Usage
 
-To use the **worker sub helper** script, simply call the PHP file with the 'url' parameter in a GET request. For example:
+To use this code you should follow these steps:
 
-برای استفاده از اسکریپت **worker sub helper** ، به سادگی فایل PHP را با پارامتر 'url' در درخواست GET فراخوانی کنید. به عنوان مثال:
+1. Ensure that there is a file called "workers.json" in the same directory as the PHP script.
+2. Call the `save_sub()` function.
+
+The `save_sub()` function will call `create_url()`, which reads from the "workers.json" file and constructs a URL based on the contents. The resulting URL is then used to fetch data and save it to a file called "worker-sub".
+
+## Functionality
+
+### create_url()
+
+The `create_url()` function reads from a JSON file called "workers.json", which should contain data in the following format:
 
 ```
-http://example.com/worker_sub_helper.php?url=worker_url
+{
+  "worker": "your.workers.dev",
+  "sub": "mci.ircf.space",
+  "max": "",
+  "original": "",
+  "fp": "",
+  "alpn": "",
+  "type": "",
+  "provider": ""
+}
 ```
 
-This will fetch data from the worker URL 'https://worker_url/sub'. You can add optional variables and parameters to modify the URL further, as shown in the examples on the HTML page.
+- `"worker"` specifies the worker subscription you want to get its data. you can find cloudflare workers subscription code in [vfarid's repo](https://github.com/vfarid/v2ray-worker-sub)
+- `"sub"` is an optional term for operator or clean ip/domain to append to the URL.
+- Any additional key/value pairs will be treated as query parameters to add to the URL.
 
-با این کار، اطلاعاتی را از URL ورکر 'https://worker_url/sub' دریافت خواهد شد. شما می‌توانید متغیرها و پارامترهای دلخواه دیگری را برای تغییر URL فراهم کنید، همانطور که در نمونه‌های موجود در صفحه HTML نشان داده شده است.
+The function constructs a URL string based on this data and returns it.
 
-you can use CodeSandbox or any other platforms that support PHP.
+### save_sub()
 
-شما می‌توانید از CodeSandbox یا هر سایر پلتفرم‌هایی که PHP را پشتیبانی می‌کنند، استفاده کنید.
+The `save_sub()` function calls `create_url()` to get a URL and then uses `file_get_contents()` to fetch the data at that URL. The resulting data is saved to a file called "worker-sub" using `file_put_contents()`. This function does not return anything.
 
-## License
+## Potential Issues
 
-This script is released under the MIT license. You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copiesof the script, subject to the conditions of the license. See the LICENSE file for more information.
+There are a few potential issues with this code:
 
-این اسکریپت تحت مجوز MIT منتشر شده است. شما آزاد هستید از این اسکریپت استفاده کنید، کپی کنید، اصلاح کنید، ادغام کنید، منتشر کنید، توزیع کنید، زیرمجوز بگیرید و/یا نسخه‌های این اسکریپت را بفروشید، با رعایت شرایط مجوز. برای کسب اطلاعات بیشتر به فایل LICENSE مراجعه کنید.
+- If the "workers.json" file is missing or malformed, the `create_url()` function may throw errors or return unexpected results.
+- If the server specified in `"worker"` is down or returns an error, `file_get_contents()`
+
+## How to Use
+
+Just press `Use this Template` and create a new repository (Private repository recomended) , edit workers.json and set your desired settings and finally setup a workflow with file in .github/workflow directory.
+Now automatically github updates your subscription every 60 minutes and puts it in a file named worker-sub.
