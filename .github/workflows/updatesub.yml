@@ -27,3 +27,10 @@ jobs:
           git add -A
           git commit -m "Automatic update"
           git push
+      
+      - name: send created sub
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          document: worker-sub.txt
