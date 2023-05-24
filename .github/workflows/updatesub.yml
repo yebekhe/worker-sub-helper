@@ -1,0 +1,29 @@
+name: "Update Worker Sub"
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: '*/60 * * * *'
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          
+      - name: Execute PHP script
+        run: |
+          php index.php
+          git config --global user.email "workersub@gmail.com"
+          git config --global user.name "workersub"
+          git config credential.helper store
+          git add -A
+          git commit -m "Automatic update"
+          git push
